@@ -21,9 +21,9 @@ import java.util.Calendar;
 
 public class GlobalElements extends Application {
 
+    public static String directory = "Retrofit";
 
-    public static boolean isConnectingToInternet(Context context)
-    {
+    public static boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -33,27 +33,23 @@ public class GlobalElements extends Application {
             if (info != null) {
                 if (info.isConnected()) {
                     return true;
-                }
-                else
-                {
+                } else {
                     NetworkInfo info1 = connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
                     if (info1.isConnected()) {
                         return true;
-                    }
-                    else
-                    {
+                    } else {
                         return false;
                     }
                 }
             }
         }
+
         return false;
     }
 
-    public static void showDialog(Context context)
-    {
+    public static void showDialog(Context context) {
         final iOSDialog iOSDialog = new iOSDialog(context);
-        iOSDialog.setTitle( "Internet");
+        iOSDialog.setTitle("Internet");
         iOSDialog.setSubtitle("Please check your internet connection... ");
         iOSDialog.setPositiveLabel("Ok");
         iOSDialog.setBoldPositiveLabel(true);
@@ -71,7 +67,6 @@ public class GlobalElements extends Application {
     public static boolean getVersionCheck() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
     }
-
 
 
     public static boolean beforeDate(String fromDate, String ToDate, String formatOfDate) {
@@ -98,14 +93,12 @@ public class GlobalElements extends Application {
         }
     }
 
-    public static String getCurrentdate()
-    {
+    public static String getCurrentdate() {
         Calendar newCalendar = Calendar.getInstance();
         SimpleDateFormat cu_date = new SimpleDateFormat("dd-MM-yyyy");
         String current_date = cu_date.format(newCalendar.getTime());
         return current_date;
     }
-
 
 
 }

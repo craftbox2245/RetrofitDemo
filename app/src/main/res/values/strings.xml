@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">RetrofitDemo</string>
     <string name="temp">temp</string>
+    <string name="runtime_permissions_txt">Please enable ALL permissions from app settings.</string>
 </resources>

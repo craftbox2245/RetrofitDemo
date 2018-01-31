@@ -27,11 +27,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
-    ArrayList<StateModel> data=new ArrayList<>();
+    ArrayList<StateModel> data = new ArrayList<>();
     StateAdapter adapter;
-    @BindView(R.id.recycleview) RecyclerView recyclerView;
+    @BindView(R.id.recycleview)
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,20 +41,16 @@ public class MainActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-        if(GlobalElements.isConnectingToInternet(MainActivity.this))
-        {
+        if (GlobalElements.isConnectingToInternet(MainActivity.this)) {
             getState();
-        }
-        else
-        {
+        } else {
             GlobalElements.showDialog(MainActivity.this);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private void getState(){
+    private void getState() {
         try {
             final ProgressDialog pd = new ProgressDialog(MainActivity.this);
             pd.setTitle("Please Wait");
@@ -76,31 +74,31 @@ public class MainActivity extends AppCompatActivity{
                     try {
                         pd.dismiss();
                         String json_response = response.body().string();
-                        JSONArray json=new JSONArray(json_response);
+                        JSONArray json = new JSONArray(json_response);
                         data.clear();
-                        for(int i=0;i<json.length();i++)
-                        {
-                            JSONObject c=json.getJSONObject(i);
-                            StateModel da=new StateModel();
+                        for (int i = 0; i < json.length(); i++) {
+                            JSONObject c = json.getJSONObject(i);
+                            StateModel da = new StateModel();
                             da.setCountry(c.getString("name"));
                             da.setCapital(c.getString("capital"));
                             da.setRegion(c.getString("region"));
                             data.add(da);
                         }
 
-                        adapter = new StateAdapter(MainActivity.this,data);
+                        adapter = new StateAdapter(MainActivity.this, data);
                         recyclerView.setAdapter(adapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayout.VERTICAL,false));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayout.VERTICAL, false));
 
                     } catch (Exception e) {
                         e.printStackTrace();
                         pd.dismiss();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     pd.dismiss();
-                    System.out.print("error"+t.getMessage());
+                    System.out.print("error" + t.getMessage());
                 }
             });
         } catch (Exception e) {
