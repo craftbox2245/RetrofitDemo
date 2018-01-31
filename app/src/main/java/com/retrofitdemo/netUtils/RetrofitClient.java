@@ -13,7 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit = null;
-    //public static String service_url = "http://24.24.25.213/pm/service/";
+   
+    public static String service_url = "https://restcountries.eu/rest/v1/";
    
     public static Retrofit getClient() {
         if (retrofit==null) {
