@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.gdacciaro.iOSDialog.iOSDialog;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,7 +22,8 @@ import java.util.Calendar;
 
 public class GlobalElements extends Application {
 
-    public static String directory = "Retrofit";
+    public static String directory = "Retrofit/";
+    public static String fileprovider_path = "com.retrofitdemo.fileprovider";
 
     public static boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context
@@ -98,6 +100,13 @@ public class GlobalElements extends Application {
         SimpleDateFormat cu_date = new SimpleDateFormat("dd-MM-yyyy");
         String current_date = cu_date.format(newCalendar.getTime());
         return current_date;
+    }
+
+    public static String DecimalFormat(String value) {
+        DecimalFormat doubleFormat = new DecimalFormat("#.##");
+        doubleFormat.setMinimumFractionDigits(2);
+        value = doubleFormat.format(Double.parseDouble(value));
+        return value;
     }
 
 

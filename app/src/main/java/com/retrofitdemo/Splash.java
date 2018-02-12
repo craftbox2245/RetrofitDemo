@@ -3,23 +3,25 @@ package com.retrofitdemo;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.retrofitdemo.netUtils.DBHelper;
 import com.retrofitdemo.netUtils.MyPreferences;
 import com.retrofitdemo.netUtils.RuntimePermissionsActivity;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Splash extends RuntimePermissionsActivity {
 
     MyPreferences myPreferences;
-
+    DBHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         myPreferences = new MyPreferences(Splash.this);
+        db = new DBHelper(Splash.this);
         /* todo 31-10-2017 create project date */
 
         new Handler().postDelayed(new Runnable() {
@@ -39,10 +41,19 @@ public class Splash extends RuntimePermissionsActivity {
     @Override
     public void onPermissionsGranted(int requestCode) {
 
-        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "" + GlobalElements.directory);
+        File folder = new File(Environment.getExternalStorageDirectory(), "" + GlobalElements.directory);
         if (!folder.exists()) {
             folder.mkdir();
         }
+
+        try {
+            db.createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //db.DeleteTable(DBHelper.COUNTRY);
+        //db.importDB(DBHelper.DB_NAME);
 
         Intent i = new Intent(Splash.this, MainActivity.class);
         startActivity(i);

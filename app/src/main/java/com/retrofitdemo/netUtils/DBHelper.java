@@ -24,7 +24,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -37,12 +36,12 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "test.db";
+    public static String DB_NAME = "test.db";
     private SQLiteDatabase db;
     private final Context context;
     private String DB_PATH;
 
-    public static String TEST = "test";
+    public static String COUNTRY = "country";
     DecimalFormat doubleFormat;
     MyPreferences myPreferences;
 
@@ -67,7 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
         FileChannel destination = null;
 
         String currentDBPath = "/data/" + context.getPackageName() + "/databases/" + DB_NAME;
-        String backupDBPath = "" + GlobalElements.directory + DB_NAME + " " + Datetime;
+        String backupDBPath = "" + GlobalElements.directory + DB_NAME;
         File currentDB = new File(data, currentDBPath);
         File backupDB = new File(sd, backupDBPath);
         try {
@@ -94,6 +93,43 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @SuppressWarnings("resource")
+    public void importDB(String db_name) {
+        // TODO Auto-generated method stub
+		/*try {
+			decrypt(""+currentDB,"154", Environment.getExternalStorageDirectory().getAbsolutePath()+GlobalElements.directory+""+db_name);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		}*/
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data  = Environment.getDataDirectory();
+            if (sd.canWrite()) {
+                String currentDBPath= "//data//" + context.getPackageName()+ "//databases//"+ DB_NAME;
+                String backupDBPath  = GlobalElements.directory+""+db_name;
+                File backupDB= new File(data, currentDBPath);
+                File currentDB1  = new File(sd, backupDBPath);
+                FileChannel src = new FileInputStream(currentDB1).getChannel();
+                FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+				/*   */
+               // File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Sagar/database/"+db_name);
+                //boolean deleted = file.delete();
+                Toast.makeText(context, "Import successfully", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+   /* @SuppressWarnings("resource")
     public void importDB(File currentDB, String db_name) {
         // TODO Auto-generated method stub
         try {
@@ -120,7 +156,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 dst.transferFrom(src, 0, src.size());
                 src.close();
                 dst.close();
-                /*   */
+                *//*   *//*
                 File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + GlobalElements.directory + db_name);
                 boolean deleted = file.delete();
                 Toast.makeText(context, "Import successfully", Toast.LENGTH_LONG).show();
@@ -128,7 +164,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
     public static void encryptfile(String path, String Pass, Context con) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         try {
@@ -285,18 +321,21 @@ public class DBHelper extends SQLiteOpenHelper {
         return "0";
     }
 
-    public void addTest(String id) {
+    public void addTest(String name,String reagion,String capital) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id", "1");
-        values.put("name", "hardip");
+        values.put("name", ""+name);
+        values.put("region", ""+reagion);
+        values.put("capital", ""+capital);
+
+        String id="-1";
 
         long _id = -1;
-        if (id.equals("" + rp_getvalue(TEST, "id", "id=" + id))) {
-            _id = db.update(TEST, values, "server_id=" + id, new String[]{});
-            id = "" + rp_getvalue(TEST, "id", "server_id=" + id);
+        if (id.equals("" + rp_getvalue(COUNTRY, "id", "id=" + id))) {
+            _id = db.update(COUNTRY, values, "id=" + id, new String[]{});
+            id = "" + rp_getvalue(COUNTRY, "id", "id=" + id);
         } else {
-            _id = db.insert(TEST, null, values);
+            _id = db.insert(COUNTRY, null, values);
             id = "" + id;
         }
     }
