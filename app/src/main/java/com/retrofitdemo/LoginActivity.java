@@ -17,6 +17,7 @@ import com.retrofitdemo.reciver.DownloadService;
 public class LoginActivity extends AppCompatActivity {
 
     AutoCompleteTextView addvisitor_country;
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
