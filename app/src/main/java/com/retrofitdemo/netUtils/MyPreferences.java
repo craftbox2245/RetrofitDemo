@@ -14,7 +14,7 @@ public class MyPreferences {
     public static String PreferenceName = "Demo";
     public static String EncraptionKey = "Demo@xyz12364";
 
-    public static String UID = "u_id";
+    public static String UID = "u_id",refreshedtoken="refreshedtoken";
 
 
 
