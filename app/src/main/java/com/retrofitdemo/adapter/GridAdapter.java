@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.retrofitdemo.R;
 import com.retrofitdemo.model.GridModel;
 import com.retrofitdemo.model.StateModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,13 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
 
+        if (data.get(i).getImage_path().equals("")) {
 
+
+        } else {
+            Picasso.with(context).load(data.get(i).getImage_path()).placeholder(R.drawable.default_img)
+                    .error(R.drawable.default_img).into(viewHolder.img);
+        }
     }
 
     @Override
@@ -44,7 +51,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img;
 
