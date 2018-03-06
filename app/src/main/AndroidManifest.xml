@@ -42,7 +42,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".OtpVerification"></activity>
+        <activity android:name=".OtpVerification" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

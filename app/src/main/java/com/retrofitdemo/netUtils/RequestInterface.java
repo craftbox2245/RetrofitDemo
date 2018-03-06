@@ -13,6 +13,9 @@ import retrofit2.http.Query;
 public interface RequestInterface {
 
 
+    String secure_field = "keys";
+    String secure_value = "1222";
+
     // todo get state list
     @GET("all")
     Call<ResponseBody> getState();
@@ -23,6 +26,11 @@ public interface RequestInterface {
                                  @Query("password") String password,
                                  @Query("imei") String imei,
                                  @Query("refreshToken") String refreshToken
+    );
+
+    // todo search Reciver Person
+    @POST("service_user.php?" + secure_field + "=" + secure_value + "&s=16&type=Android")
+    io.reactivex.Observable<ResponseBody> searchReciverPerson(@Query("name") String name
     );
 
 }
