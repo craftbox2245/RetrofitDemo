@@ -14,9 +14,11 @@ import android.widget.LinearLayout;
 import com.retrofitdemo.adapter.GridAdapter;
 import com.retrofitdemo.adapter.SearchCityAdapter;
 import com.retrofitdemo.adapter.StateAdapter;
+import com.retrofitdemo.custom.MultiSelectionSpinner;
 import com.retrofitdemo.custom.RecyclerViewPositionHelper;
 import com.retrofitdemo.custom.SpacesItemDecoration;
 import com.retrofitdemo.custom.Toaster;
+import com.retrofitdemo.model.GeneralModel;
 import com.retrofitdemo.model.GridModel;
 import com.retrofitdemo.model.StateModel;
 import com.retrofitdemo.netUtils.DBHelper;
@@ -27,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MultiSelectionSpinner.OnMultipleItemsSelectedListener {
 
     ArrayList<StateModel> data = new ArrayList<>();
     ArrayList<GridModel> Griddata = new ArrayList<>();
@@ -47,11 +50,18 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycleview)
     RecyclerView recyclerView;
-    @BindView(R.id.input_city) AutoCompleteTextView city;
+    @BindView(R.id.input_city)
+    AutoCompleteTextView city;
 
     int firstVisibleItem, visibleItemCount, totalItemCount, count = 0;
     protected int m_PreviousTotalCount;
     RecyclerViewPositionHelper mRecyclerViewHelper;
+
+    ArrayList<GeneralModel> multi_data = new ArrayList<>();
+    ArrayList<String> multiData = new ArrayList<>();
+
+    String lableId = "0";
+    StringBuilder builder = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             GlobalElements.showDialog(MainActivity.this);
         }
+        MultiSelectionSpinner contactLabel = (MultiSelectionSpinner) findViewById(R.id.contact_label);
 
         SearchCityAdapter searchCity = new SearchCityAdapter(MainActivity.this);
         city.setAdapter(searchCity);
@@ -94,6 +105,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void getData(MultiSelectionSpinner multiSelectionSpinner) {
+        multi_data.clear();
+        multiData.clear();
+        GeneralModel da = new GeneralModel();
+        da.setId("");
+        da.setName("Please Select");
+        multi_data.add(da);
+        multiData.add("Please Select");
+
+        da = new GeneralModel();
+        da.setId("1");
+        da.setName("one");
+        multi_data.add(da);
+        multiData.add("one");
+
+        da = new GeneralModel();
+        da.setId("2");
+        da.setName("two");
+        multi_data.add(da);
+        multiData.add("two");
+
+        da = new GeneralModel();
+        da.setId("3");
+        da.setName("three");
+        multi_data.add(da);
+        multiData.add("three");
+
+        multiSelectionSpinner.setItems(multiData);
+        multiSelectionSpinner.setListener(this);
     }
 
     @Override
@@ -214,5 +256,27 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void selectedIndices(List<Integer> indices) {
+
+    }
+
+    @Override
+    public void selectedStrings(List<String> strings) {
+        lableId = "";
+        builder.setLength(0);
+        for (int i = 0; i < multi_data.size(); i++) {
+            String name = multi_data.get(i).getName();
+            for (int j = 0; j < strings.size(); j++) {
+                if (name.equals("" + strings.get(j).toString())) {
+                    if (!name.equals("Select Label")) {
+                        builder.append(multi_data.get(i).getId()).append(",");
+                    }
+                }
+            }
+        }
+        lableId = "" + GlobalElements.getRemoveLastComma(builder.toString());
     }
 }

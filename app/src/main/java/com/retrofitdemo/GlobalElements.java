@@ -109,5 +109,19 @@ public class GlobalElements extends Application {
         return value;
     }
 
+    public static String getRemoveLastComma(String text) {
+        String refine_txt = null;
+        try {
+            if (text.equals("")) {
+                return "";
+            } else {
+                refine_txt = text.substring(0, text.lastIndexOf(","));
+                return refine_txt;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return refine_txt = "";
+        }
+    }
 
 }

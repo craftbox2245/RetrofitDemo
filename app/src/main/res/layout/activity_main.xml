@@ -30,9 +30,19 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <com.retrofitdemo.custom.MultiSelectionSpinner
+        android:id="@+id/contact_label"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittextview_background"></com.retrofitdemo.custom.MultiSelectionSpinner>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleview"
         android:layout_marginTop="20dp"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
