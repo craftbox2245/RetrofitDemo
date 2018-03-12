@@ -2,4 +2,7 @@
     <string name="app_name">RetrofitDemo</string>
     <string name="temp">temp</string>
     <string name="runtime_permissions_txt">Please enable ALL permissions from app settings.</string>
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+
 </resources>

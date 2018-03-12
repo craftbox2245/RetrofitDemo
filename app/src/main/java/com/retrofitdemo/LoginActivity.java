@@ -1,5 +1,6 @@
 package com.retrofitdemo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +13,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
+import com.retrofitdemo.netUtils.RequestInterface;
+import com.retrofitdemo.netUtils.RetrofitClient;
 import com.retrofitdemo.reciver.DownloadService;
+
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -102,5 +112,45 @@ public class LoginActivity extends AppCompatActivity {
         });*/
 
 
+    }
+
+    private void LoginUser() {
+        try {
+            final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+            pd.setTitle("Please Wait");
+            pd.setMessage("Loading");
+            pd.setCancelable(true);
+            pd.show();
+            RequestInterface request = RetrofitClient.getClient().create(RequestInterface.class);
+            Call<ResponseBody> call = request.LoginUser("","","","");
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        pd.dismiss();
+                        String json_response = response.body().string();
+                        JSONObject json = new JSONObject(json_response);
+                        if (json.getInt("ack") == 1) {
+                            JSONObject result = json.getJSONObject("result");
+
+
+                        } else {
+                           // Toaster.show(LoginActivity.this, "" + json.getString("ack_msg"), true, Toaster.DANGER);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    pd.dismiss();
+                    System.out.print("error" + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

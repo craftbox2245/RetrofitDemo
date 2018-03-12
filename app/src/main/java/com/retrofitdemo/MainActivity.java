@@ -8,9 +8,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 
 import com.retrofitdemo.adapter.GridAdapter;
+import com.retrofitdemo.adapter.SearchCityAdapter;
 import com.retrofitdemo.adapter.StateAdapter;
 import com.retrofitdemo.custom.RecyclerViewPositionHelper;
 import com.retrofitdemo.custom.SpacesItemDecoration;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycleview)
     RecyclerView recyclerView;
+    @BindView(R.id.input_city) AutoCompleteTextView city;
 
     int firstVisibleItem, visibleItemCount, totalItemCount, count = 0;
     protected int m_PreviousTotalCount;
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             GlobalElements.showDialog(MainActivity.this);
         }
 
+        SearchCityAdapter searchCity = new SearchCityAdapter(MainActivity.this);
+        city.setAdapter(searchCity);
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
