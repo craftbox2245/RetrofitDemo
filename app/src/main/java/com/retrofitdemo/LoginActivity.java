@@ -1,24 +1,20 @@
 package com.retrofitdemo;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.retrofitdemo.netUtils.RequestInterface;
 import com.retrofitdemo.netUtils.RetrofitClient;
-import com.retrofitdemo.reciver.DownloadService;
 
 import org.json.JSONObject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,12 +23,23 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     AutoCompleteTextView addvisitor_country;
+    @BindView(R.id.login_mobile)
+    EditText loginMobile;
+    @BindView(R.id.login_password)
+    EditText loginPassword;
+    @BindView(R.id.addvisitor_country)
+    AutoCompleteTextView addvisitorCountry;
+    @BindView(R.id.login_login_btn)
+    Button loginLoginBtn;
+    @BindView(R.id.activity_login)
+    LinearLayout activityLogin;
     //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
         /*try {
             Intent intent = new Intent(AccountActivity.this, DownloadService.class);
@@ -112,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         });*/
 
 
+
     }
 
     private void LoginUser() {
@@ -122,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             pd.setCancelable(true);
             pd.show();
             RequestInterface request = RetrofitClient.getClient().create(RequestInterface.class);
-            Call<ResponseBody> call = request.LoginUser("","","","");
+            Call<ResponseBody> call = request.LoginUser("", "", "", "");
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -136,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         } else {
-                           // Toaster.show(LoginActivity.this, "" + json.getString("ack_msg"), true, Toaster.DANGER);
+                            // Toaster.show(LoginActivity.this, "" + json.getString("ack_msg"), true, Toaster.DANGER);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
