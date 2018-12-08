@@ -67,7 +67,7 @@ public class Splash extends RuntimePermissionsActivity {
             e.printStackTrace();
         }
 
-        Intent i = new Intent(Splash.this, MainActivity.class);
+        Intent i = new Intent(Splash.this, SearchActivity.class);
         startActivity(i);
         finish();
     }

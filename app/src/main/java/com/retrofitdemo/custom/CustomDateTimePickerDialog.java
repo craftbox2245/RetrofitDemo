@@ -1,4 +1,4 @@
-package com.cdms.craftbox.custom;
+package com.retrofitdemo.custom;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -6,7 +6,7 @@ import android.content.Context;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.cdms.craftbox.R;
+import com.retrofitdemo.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

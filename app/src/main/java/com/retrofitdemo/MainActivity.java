@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements MultiSelectionSpi
         SearchCityAdapter searchCity = new SearchCityAdapter(MainActivity.this);
         city.setAdapter(searchCity);
 
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);

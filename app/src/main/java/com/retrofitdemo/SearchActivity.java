@@ -60,6 +60,8 @@ public class SearchActivity extends AppCompatActivity {
         intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
         startActivityForResult(intent, Constants.REQUEST_CODE);
 
+        rvImages = (RecyclerView) findViewById(R.id.recycleview);
+
     }
 
     @Override
