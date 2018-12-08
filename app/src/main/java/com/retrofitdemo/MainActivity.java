@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements MultiSelectionSpi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         db = new DBHelper(MainActivity.this);
         ButterKnife.bind(this);
         if (GlobalElements.isConnectingToInternet(MainActivity.this)) {
