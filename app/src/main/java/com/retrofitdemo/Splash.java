@@ -71,4 +71,6 @@ public class Splash extends RuntimePermissionsActivity {
         startActivity(i);
         finish();
     }
+	
+	/// https://github.com/PaulinaSadowska/MultipartProgressDemo
 }
